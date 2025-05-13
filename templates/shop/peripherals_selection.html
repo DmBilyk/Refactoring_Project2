@@ -1,0 +1,64 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Select Peripherals - TechBuilder{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="progress-bar">
+        <div class="progress-fill" style="width: 87.5%;"></div>
+    </div>
+
+    <h1>Step 7: Select Peripherals</h1>
+    <p>Add essential peripherals to complete your computer setup.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <div class="checkbox-option">
+                {{ form.monitor }}
+                <div>
+                    <label for="{{ form.monitor.id }}">Monitor</label>
+                    <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">24" Full HD display for clear, sharp visuals</p>
+                </div>
+            </div>
+
+            <div class="checkbox-option">
+                {{ form.keyboard }}
+                <div>
+                    <label for="{{ form.keyboard.id }}">Keyboard</label>
+                    <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">Ergonomic keyboard with programmable keys</p>
+                </div>
+            </div>
+
+            <div class="checkbox-option">
+                {{ form.mouse }}
+                <div>
+                    <label for="{{ form.mouse.id }}">Mouse</label>
+                    <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">Precision optical mouse with adjustable DPI</p>
+                </div>
+            </div>
+
+            <div class="checkbox-option">
+                {{ form.headset }}
+                <div>
+                    <label for="{{ form.headset.id }}">Headset</label>
+                    <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">Comfortable gaming headset with noise-canceling mic</p>
+                </div>
+            </div>
+
+            <div class="checkbox-option">
+                {{ form.webcam }}
+                <div>
+                    <label for="{{ form.webcam.id }}">Webcam</label>
+                    <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">HD webcam for clear video conferencing</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between;">
+            <a href="{% url 'color_selection' %}" class="btn" style="background-color: var(--gray);">Back</a>
+            <button type="submit" class="btn">Continue to Device Type Selection</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

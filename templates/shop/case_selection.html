@@ -1,0 +1,40 @@
+<!-- templates/shop/case_selection.html -->
+{% extends 'shop/base.html' %}
+
+{% block title %}Select Case - TechBuilder{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="progress-bar">
+        <div class="progress-fill" style="width: 12.5%;"></div>
+    </div>
+
+    <h1>Step 1: Select Your Case</h1>
+    <p>Choose the perfect case for your new computer. The case houses all components and defines the look of your system.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {% for choice in form.case_type %}
+            <div class="radio-option">
+                {{ choice.tag }}
+                <div>
+                    <strong>{{ choice.choice_label }}</strong>
+                    {% if choice.choice_value == 'Tower' %}
+                    <p>Full-sized tower with maximum expandability and cooling options.</p>
+                    {% elif choice.choice_value == 'Mini' %}
+                    <p>Compact case perfect for limited spaces without sacrificing performance.</p>
+                    {% elif choice.choice_value == 'Slim' %}
+                    <p>Ultra-thin design for a sleek and modern look on your desk.</p>
+                    {% elif choice.choice_value == 'Gaming' %}
+                    <p>Specialized case with RGB lighting and superior airflow for gaming.</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn">Continue to Processor Selection</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+<!-- templates/shop/color_selection.html -->
+{% extends 'shop/base.html' %}
+
+{% block title %}Select Color - TechBuilder{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="progress-bar">
+        <div class="progress-fill" style="width: 75%;"></div>
+    </div>
+
+    <h1>Step 6: Choose Your Color</h1>
+    <p>Select the perfect color for your computer case to match your style and setup.</p>
+
+    <form method="post">
+        {% csrf_token %}
+<div class="form-group">
+    <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+        {% for choice in form.color %}
+        <div style="flex: 1 0 30%; min-width: 200px;">
+            <label class="radio-option {{ choice.css_class }}">
+                {{ choice.tag }}
+                <span>{{ choice.choice_label }}</span>
+            </label>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+        <div style="display: flex; justify-content: space-between;">
+            <a href="{% url 'graphics_selection' %}" class="btn" style="background-color: var(--gray);">Back</a>
+            <button type="submit" class="btn">Continue to Peripherals Selection</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

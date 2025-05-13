@@ -1,0 +1,41 @@
+version: '3.9'
+
+
+
+
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: django_web
+    volumes:
+      - .:/app
+      - ./ssl:/app/ssl
+    ports:
+      - "8000:8000"
+    environment:
+      - SMTP_HOST=localhost
+      - SMTP_PORT=587
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - sonarqube
+      -
+
+  sonarqube:
+    image: sonarqube:10.3-community
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_logs:/opt/sonarqube/logs
+      - sonarqube_extensions:/opt/sonarqube/extensions
+
+volumes:
+  sonarqube_data:
+  sonarqube_logs:
+  sonarqube_extensions:

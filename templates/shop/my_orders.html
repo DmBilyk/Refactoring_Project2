@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">My Orders</h1>
+
+    {% if enhanced_orders %}
+        <div class="row">
+            {% for item in enhanced_orders %}
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Order #{{ item.order.id }}</h5>
+                            <p class="text-muted">Ordered on: {{ item.order.order_date|date:"F j, Y" }}</p>
+                        </div>
+                        <div class="card-body">
+                            <h6>{{ item.computer.color }} {{ item.computer.case_type }} {% if item.computer.is_laptop %}Laptop{% else %}Desktop{% endif %}</h6>
+                            <ul class="list-unstyled">
+                                <li><strong>Processor:</strong> {{ item.computer.processor }}</li>
+                                <li><strong>Memory:</strong> {{ item.computer.memory }}GB</li>
+                                <li><strong>Storage:</strong> {{ item.computer.storage }}GB</li>
+                                <li><strong>Graphics:</strong> {{ item.computer.graphics_card }}</li>
+                            </ul>
+                            <p><strong>Price:</strong> ${{ item.computer.price }}</p>
+                            <p><strong>Status:</strong> {{ item.order.status }}</p>
+                            <a href="{% url 'order_detail' item.order.id %}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <p>You haven't placed any orders yet.</p>
+            <a href="{% url 'case_selection' %}" class="btn btn-primary">Start Configure Your Computer</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+"""

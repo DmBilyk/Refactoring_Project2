@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Order Summary</h1>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5>Your Computer Configuration</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Core Specifications</h6>
+                    <ul>
+                        <li><strong>Case Type:</strong> {{ case_type }}</li>
+                        <li><strong>Device Type:</strong> {% if is_laptop %}Laptop{% else %}Desktop{% endif %}</li>
+                        <li><strong>Processor:</strong> {{ processor }}</li>
+                        <li><strong>Memory:</strong> {{ memory }}GB</li>
+                        <li><strong>Storage:</strong> {{ storage }}GB SSD</li>
+                        <li><strong>Graphics:</strong> {{ graphics_card }}</li>
+                        <li><strong>Color:</strong> {{ color }}</li>
+                    </ul>
+                </div>
+
+                <div class="col-md-6">
+                    <h6>Peripherals</h6>
+                    {% if peripherals %}
+                        <ul>
+                            {% for item in peripherals %}
+                                <li>{{ item|title }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No peripherals selected</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="price-summary mt-4">
+                <h4>Price Summary</h4>
+                <div class="alert alert-primary">
+                    <p class="mb-0">
+                        <strong>Total Estimated Price:</strong> ${{ estimated_price|floatformat:2 }}
+                    </p>
+                    <small class="text-muted">Includes all selected components and assembly fee.</small>
+                </div>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'device_type_selection' %}" class="btn btn-secondary">Back</a>
+                    <button type="submit" class="btn btn-primary">Place Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

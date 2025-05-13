@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Order #{{ order.id }} Details</h1>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5>Order Information</h5>
+                <span class="badge {% if order.status == 'Completed' %}bg-success{% elif order.status == 'Processing' %}bg-warning{% elif order.status == 'Cancelled' %}bg-danger{% else %}bg-info{% endif %}">
+                    {{ order.status }}
+                </span>
+            </div>
+            <p class="text-muted">Ordered on: {{ order.order_date|date:"F j, Y" }}</p>
+        </div>
+        <div class="card-body">
+            <h2>{{ computer.color }} {{ computer.case_type }} {% if computer.is_laptop %}Laptop{% else %}Desktop{% endif %}</h2>
+
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h5>System Specifications</h5>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Processor</th>
+                                <td>{{ computer.processor }}</td>
+                            </tr>
+                            <tr>
+                                <th>Memory</th>
+                                <td>{{ computer.memory }}GB</td>
+                            </tr>
+                            <tr>
+                                <th>Storage</th>
+                                <td>{{ computer.storage }}GB SSD</td>
+                            </tr>
+                            <tr>
+                                <th>Graphics</th>
+                                <td>{{ computer.graphics_card }}</td>
+                            </tr>
+                            <tr>
+                                <th>Color</th>
+                                <td>{{ computer.color }}</td>
+                            </tr>
+                            <tr>
+                                <th>Type</th>
+                                <td>{% if computer.is_laptop %}Laptop{% else %}Desktop{% endif %}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-md-6">
+                    <h5>Peripherals</h5>
+                    {% if computer.peripherals %}
+                        <ul class="list-group">
+                            {% for peripheral in computer.peripherals %}
+                                <li class="list-group-item">{{ peripheral|title }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No peripherals selected.</p>
+                    {% endif %}
+
+                    <div class="mt-4">
+                        <h5>Price Breakdown</h5>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Base Price</th>
+                                    <td>${{ computer.price|floatformat:2 }}</td>
+                                </tr>
+                                <tr class="table-primary">
+                                    <th>Total</th>
+                                    <td><strong>${{ computer.price|floatformat:2 }}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <a href="{% url 'my_orders' %}" class="btn btn-secondary">Back to My Orders</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

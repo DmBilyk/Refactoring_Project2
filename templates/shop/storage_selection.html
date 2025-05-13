@@ -1,0 +1,41 @@
+<!-- templates/shop/storage_selection.html -->
+{% extends 'shop/base.html' %}
+
+{% block title %}Select Storage - TechBuilder{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="progress-bar">
+        <div class="progress-fill" style="width: 50%;"></div>
+    </div>
+
+    <h1>Step 4: Select Your Storage</h1>
+    <p>Storage determines how many files, programs, and games you can keep on your computer.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {% for choice in form.storage %}
+            <div class="radio-option">
+                {{ choice.tag }}
+                <div>
+                    <strong>{{ choice.choice_label }}</strong>
+                    {% if choice.choice_value == '512' %}
+                    <p>Entry-level SSD: Fast loading times for essential applications.</p>
+                    {% elif choice.choice_value == '1024' %}
+                    <p>Standard SSD: Plenty of space for apps, games, and files.</p>
+                    {% elif choice.choice_value == '2048' %}
+                    <p>Large capacity SSD: Ample room for large media libraries and projects.</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div style="display: flex; justify-content: space-between;">
+            <a href="{% url 'memory_selection' %}" class="btn" style="background-color: var(--gray);">Back</a>
+            <button type="submit" class="btn">Continue to Graphics Card Selection</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

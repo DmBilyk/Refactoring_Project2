@@ -1,0 +1,43 @@
+<!-- templates/shop/memory_selection.html -->
+{% extends 'shop/base.html' %}
+
+{% block title %}Select Memory - TechBuilder{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="progress-bar">
+        <div class="progress-fill" style="width: 37.5%;"></div>
+    </div>
+
+    <h1>Step 3: Select Your Memory (RAM)</h1>
+    <p>RAM determines how many programs your computer can run simultaneously and how quickly it can access data.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {% for choice in form.memory %}
+            <div class="radio-option">
+                {{ choice.tag }}
+                <div>
+                    <strong>{{ choice.choice_label }}</strong>
+                    {% if choice.choice_value == '8' %}
+                    <p>Entry-level: Good for basic computing and light multitasking.</p>
+                    {% elif choice.choice_value == '16' %}
+                    <p>Standard: Recommended for gaming and everyday productivity.</p>
+                    {% elif choice.choice_value == '32' %}
+                    <p>High-performance: Ideal for content creation and heavy multitasking.</p>
+                    {% elif choice.choice_value == '64' %}
+                    <p>Professional: For demanding workloads like video editing and virtualization.</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div style="display: flex; justify-content: space-between;">
+            <a href="{% url 'processor_selection' %}" class="btn" style="background-color: var(--gray);">Back</a>
+            <button type="submit" class="btn">Continue to Storage Selection</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

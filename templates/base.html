@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}TechBuilder{% endblock %}</title>
+
+  <link rel="stylesheet" href="{% static 'css/registration.css' %}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #121212;
+      --bg-card: #1e1e1e;
+      --text-primary: #e0e0e0;
+      --text-secondary: #a0a0a0;
+      --accent: #3498db;
+      --accent-hover: #2980b9;
+      --border: #333333;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .main-nav {
+      padding: 1rem 0;
+    }
+
+    .main-nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .logo i {
+      margin-right: 8px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-links a.highlight {
+      background-color: var(--accent);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .nav-links a.highlight:hover {
+      background-color: var(--accent-hover);
+    }
+
+    .messages {
+      margin: 1rem 0;
+    }
+
+    .message {
+      padding: 0.75rem 1rem;
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    .message.success {
+      background-color: rgba(52, 152, 219, 0.1);
+      border-left: 4px solid var(--accent);
+    }
+
+    .message.error {
+      background-color: rgba(239, 68, 68, 0.1);
+      border-left: 4px solid #ef4444;
+    }
+
+    main.container {
+      min-height: calc(100vh - 200px);
+      padding: 2rem 1rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 0;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    /* Explore computers component for registered users */
+    .explore-computers {
+      background-color: var(--bg-card);
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .explore-computers h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .explore-computers p {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--accent);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.2s;
+    }
+
+    .btn:hover {
+      background-color: var(--accent-hover);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      margin-left: 1rem;
+    }
+
+    .btn-outline:hover {
+      background-color: rgba(52, 152, 219, 0.1);
+    }
+
+    .nav-links span {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+  </style>
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+  <header>
+    <nav class="main-nav">
+      <div class="container">
+        <a href="/" class="logo"><i class="fas fa-laptop"></i> TechBuilder</a>
+        <div class="nav-links">
+          {% if user.is_authenticated %}
+            <a href="{% url 'index' %}">Home</a>
+            <a href="{% url 'case_selection' %}">Build PC</a>
+            <a href="{% url 'my_orders' %}">My Orders</a>
+            <span>Hello, {{ user.username }}</span>
+            <a href="{% url 'registration_app:logout' %}">Logout</a>
+          {% else %}
+            <a href="{% url 'registration_app:login' %}">Login</a>
+            <a href="{% url 'registration_app:register' %}" class="highlight">Register</a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <div class="message {{ message.tags }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <div class="explore-computers">
+      <h2>Build Your PC</h2>
+      <p>Create your custom computer configuration with our powerful PC builder.</p>
+      <div>
+        <a href="{% url 'case_selection' %}" class="btn">Start Building</a>
+        <a href="/" class="btn btn-outline">Home</a>
+      </div>
+    </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; {% now "Y" %} TechBuilder Computer Configurator. All rights reserved.</p>
+    </div>
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

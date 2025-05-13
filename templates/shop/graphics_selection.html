@@ -1,0 +1,45 @@
+<!-- templates/shop/graphics_selection.html -->
+{% extends 'shop/base.html' %}
+
+{% block title %}Select Graphics Card - TechBuilder{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="progress-bar">
+        <div class="progress-fill" style="width: 62.5%;"></div>
+    </div>
+
+    <h1>Step 5: Select Your Graphics Card</h1>
+    <p>The graphics card determines your computer's visual performance for gaming, design work, and video playback.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {% for choice in form.graphics_card %}
+            <div class="radio-option">
+                {{ choice.tag }}
+                <div>
+                    <strong>{{ choice.choice_label }}</strong>
+                    {% if choice.choice_value == 'Integrated' %}
+                    <p>Built into the processor: Suitable for everyday tasks and light media.</p>
+                    {% elif choice.choice_value == 'RTX-3060' %}
+                    <p>Entry-level gaming card: Good performance for 1080p gaming.</p>
+                    {% elif choice.choice_value == 'RTX-3070' %}
+                    <p>Mid-range gaming card: Excellent for 1440p gaming and content creation.</p>
+                    {% elif choice.choice_value == 'RTX-3080' %}
+                    <p>High-end gaming card: Perfect for 4K gaming and professional work.</p>
+                    {% elif choice.choice_value == 'RX-6700XT' %}
+                    <p>AMD alternative: Great value for high-performance gaming.</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div style="display: flex; justify-content: space-between;">
+            <a href="{% url 'storage_selection' %}" class="btn" style="background-color: var(--gray);">Back</a>
+            <button type="submit" class="btn">Continue to Color Selection</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+<!-- templates/shop/index.html -->
+{% extends 'shop/base.html' %}
+
+{% block title %}TechBuilder - Custom Computer Configurator{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Welcome to TechBuilder</h1>
+    <p>Design your dream computer with our easy-to-use configurator. Whether you need a powerful desktop or a portable laptop, we've got you covered.</p>
+
+    <div style="display: flex; gap: 30px; margin: 40px 0;">
+        <div style="flex: 1; text-align: center; padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
+            <i class="fas fa-desktop" style="font-size: 3rem; color: var(--primary); margin-bottom: 15px;"></i>
+            <h2>Custom Desktop</h2>
+            <p>Build a high-performance desktop computer tailored to your specific needs.</p>
+            <a href="{% url 'case_selection' %}" class="btn">Start Building</a>
+        </div>
+
+        <div style="flex: 1; text-align: center; padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
+            <i class="fas fa-laptop" style="font-size: 3rem; color: var(--secondary); margin-bottom: 15px;"></i>
+            <h2>Custom Laptop</h2>
+            <p>Configure a portable laptop with the perfect balance of power and battery life.</p>
+            <a href="{% url 'case_selection' %}" class="btn btn-secondary">Start Building</a>
+        </div>
+    </div>
+
+    <h2>Why Choose TechBuilder?</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px;">
+        <div style="flex: 1 0 30%; padding: 15px;">
+            <i class="fas fa-tools" style="color: var(--primary); margin-right: 8px;"></i>
+            <strong>Custom Components</strong>
+            <p>Choose from a wide range of high-quality components to build your perfect system.</p>
+        </div>
+        <div style="flex: 1 0 30%; padding: 15px;">
+            <i class="fas fa-check-circle" style="color: var(--primary); margin-right: 8px;"></i>
+            <strong>Quality Assured</strong>
+            <p>All our computers undergo rigorous testing to ensure reliability and performance.</p>
+        </div>
+        <div style="flex: 1 0 30%; padding: 15px;">
+            <i class="fas fa-truck" style="color: var(--primary); margin-right: 8px;"></i>
+            <strong>Fast Delivery</strong>
+            <p>Your custom-built computer will be assembled and shipped quickly.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

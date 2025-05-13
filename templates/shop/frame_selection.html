@@ -1,0 +1,56 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Select Frame Type{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h2 class="mb-4">Step 1: Choose Your Frame Type</h2>
+
+        <div class="step-indicator">
+            <div class="step active">1</div>
+            <div class="step">2</div>
+            <div class="step">3</div>
+            <div class="step">4</div>
+            <div class="step">5</div>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="row">
+                {% for radio in form.frame_type %}
+                <div class="col-md-6 mb-3">
+                    <div class="bike-option">
+                        <div class="form-check">
+                            {{ radio.tag }}
+                            <label class="form-check-label" for="{{ radio.id_for_label }}">
+                                <h4>{{ radio.choice_label }}</h4>
+
+                                {% if 'Mountain' in radio.choice_label %}
+                                <p>Perfect for off-road trails and rugged terrain. Durable, with excellent shock absorption.</p>
+                                <p><strong>Base Price:</strong> $300</p>
+                                {% elif 'Road' in radio.choice_label %}
+                                <p>Designed for speed on paved roads. Lightweight and aerodynamic.</p>
+                                <p><strong>Base Price:</strong> $250</p>
+                                {% elif 'Hybrid' in radio.choice_label %}
+                                <p>The best of both worlds. Comfortable for city riding with capability for light trails.</p>
+                                <p><strong>Base Price:</strong> $280</p>
+                                {% elif 'Cruiser' in radio.choice_label %}
+                                <p>Comfortable and stylish. Perfect for casual rides around town.</p>
+                                <p><strong>Base Price:</strong> $220</p>
+                                {% endif %}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="mt-4 text-end">
+                <button type="submit" class="btn btn-primary">Next Step</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
