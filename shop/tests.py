@@ -271,16 +271,16 @@ class ViewTests(TestCase):
         request = self.factory.get('/my-orders/')
         request.user = self.user
 
-        # Setup the mock order with proper computer ID
-        mock_order = MagicMock()
-        mock_order.computer.id = 1  # Set a valid integer ID
 
-        # Configure the filter and queryset
+        mock_order = MagicMock()
+        mock_order.computer.id = 1
+
+
         mock_queryset = MagicMock()
         mock_filter.return_value = mock_queryset
         mock_queryset.order_by.return_value = [mock_order]
 
-        # Mock the get_computer_details method to return valid data
+
         mock_get_computer_details.return_value = {
             'name': 'Test Computer',
             'specs': 'Test Specs'

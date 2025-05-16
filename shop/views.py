@@ -51,27 +51,25 @@ def case_selection(request):
         return redirect('processor_selection')
     return render(request, 'shop/case_selection.html', {'form': form})
 
-@require_safe
+@require_http_methods(["GET", "POST"])
 @login_required
 def processor_selection(request):
     """
     Handles the processor selection step in the computer building process.
     Displays a form for selecting the processor and saves the selection to the session.
-
-
     """
     result = check_computer_builder_session(request, 'case_type')
     if result:
         return result
 
     form = ProcessorSelectionForm(request.POST or None)
-    if form.is_valid():
+    if request.method == 'POST' and form.is_valid():
         request.session['computer_builder']['processor'] = form.cleaned_data['processor']
         request.session.modified = True
         return redirect('memory_selection')
     return render(request, 'shop/processor_selection.html', {'form': form})
 
-@require_safe
+@require_http_methods(["GET", "POST"])
 @login_required
 def memory_selection(request):
     """
@@ -92,7 +90,7 @@ def memory_selection(request):
         return redirect('storage_selection')
     return render(request, 'shop/memory_selection.html', {'form': form})
 
-@require_safe
+@require_http_methods(["GET", "POST"])
 @login_required
 def storage_selection(request):
     """
@@ -113,7 +111,7 @@ def storage_selection(request):
         return redirect('graphics_selection')
     return render(request, 'shop/storage_selection.html', {'form': form})
 
-@require_safe
+@require_http_methods(["GET", "POST"])
 @login_required
 def graphics_selection(request):
     """
@@ -133,7 +131,7 @@ def graphics_selection(request):
         return redirect('color_selection')
     return render(request, 'shop/graphics_selection.html', {'form': form})
 
-@require_safe
+@require_http_methods(["GET", "POST"])
 @login_required
 def color_selection(request):
     """
@@ -152,7 +150,7 @@ def color_selection(request):
         return redirect('peripherals_selection')
     return render(request, 'shop/color_selection.html', {'form': form})
 
-@require_safe
+@require_http_methods(["GET", "POST"])
 @login_required
 def peripherals_selection(request):
     """
@@ -172,7 +170,7 @@ def peripherals_selection(request):
         return redirect('device_type_selection')
     return render(request, 'shop/peripherals_selection.html', {'form': form})
 
-@require_safe
+@require_http_methods(["GET", "POST"])
 @login_required
 def device_type_selection(request):
     """
@@ -191,7 +189,7 @@ def device_type_selection(request):
         return redirect('summary')
     return render(request, 'shop/device_type_selection.html', {'form': form})
 
-@require_safe
+@require_http_methods(["GET", "POST"])
 @login_required
 def summary(request):
     """
@@ -235,7 +233,7 @@ def summary(request):
 
     return render(request, 'shop/summary.html', context)
 
-@require_safe
+@require_http_methods(["GET", "POST"])
 @login_required
 def order_success(request, order_id):
     """
@@ -248,7 +246,7 @@ def order_success(request, order_id):
     computer_details = ComputerShopFacade.get_computer_details(order.computer.id)
     return render(request, 'shop/order_success.html', {'order': order, 'computer': computer_details})
 
-@require_safe
+@require_http_methods(["GET", "POST"])
 @login_required
 def my_orders(request):
     """
@@ -268,7 +266,7 @@ def my_orders(request):
 
     return render(request, 'shop/my_orders.html', {'enhanced_orders': enhanced_orders})
 
-@require_safe
+@require_http_methods(["GET", "POST"])
 @login_required
 def order_detail(request, order_id):
     """
